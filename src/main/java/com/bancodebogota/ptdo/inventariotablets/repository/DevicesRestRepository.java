@@ -176,6 +176,7 @@ public class DevicesRestRepository {
 
 		keyMgrFactory = KeyManagerFactory.getInstance("SunX509");
 		keyStore = KeyStore.getInstance("JKS");
+		System.out.println(getAbsolutePathResourceFile(mainKeystorePath));
 		keyStore.load(new FileInputStream(getAbsolutePathResourceFile(mainKeystorePath)),
 				mainKeystorePassword.toCharArray());
 		keyMgrFactory.init(keyStore, mainKeystorePassword.toCharArray());

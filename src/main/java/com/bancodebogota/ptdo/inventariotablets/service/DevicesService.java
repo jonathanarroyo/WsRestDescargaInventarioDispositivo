@@ -2,6 +2,7 @@ package com.bancodebogota.ptdo.inventariotablets.service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.List;
@@ -70,20 +71,20 @@ public class DevicesService {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 * @throws GeneralSecurityException
+	 * @throws URISyntaxException
 	 */
 	public List<Device> getDevicesFilteredByUserDevice()
-			throws FileNotFoundException, IOException, GeneralSecurityException {
+			throws FileNotFoundException, IOException, GeneralSecurityException, URISyntaxException {
 		String authToken = null;
 		List<Device> lstDevices = null;
-		
+
 		/*
-		authToken = devicesRestRepository.getAuthToken(urlWSRestAuth, mdmLogin,
-				getPwAdminPasswordPE(loginAdminPass, domainAdminPass));
-		*/
-		
-		authToken = devicesRestRepository.getAuthToken(urlWSRestAuth, mdmLogin,
-				"1234567");
-		
+		 * authToken = devicesRestRepository.getAuthToken(urlWSRestAuth, mdmLogin,
+		 * getPwAdminPasswordPE(loginAdminPass, domainAdminPass));
+		 */
+
+		authToken = devicesRestRepository.getAuthToken(urlWSRestAuth, mdmLogin, "1234567");
+
 		lstDevices = devicesRestRepository.getAllDevices(urlWSRestDevices, authToken);
 
 		lstDevices.forEach(p -> {

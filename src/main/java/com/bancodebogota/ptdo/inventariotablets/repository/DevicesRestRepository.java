@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -71,10 +73,11 @@ public class DevicesRestRepository {
 	 * @throws CertificateException
 	 * @throws FileNotFoundException
 	 * @throws IOException
+	 * @throws URISyntaxException
 	 */
 	public List<Device> getAllDevices(String urlWSRestDevices, String authToken)
 			throws UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException,
-			CertificateException, FileNotFoundException, IOException {
+			CertificateException, FileNotFoundException, IOException, URISyntaxException {
 		DeviceRequest deviceRequest = null;
 		DeviceResponse deviceResponse = null;
 		Response response = null;
@@ -120,9 +123,10 @@ public class DevicesRestRepository {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 * @throws GeneralSecurityException
+	 * @throws URISyntaxException
 	 */
 	public String getAuthToken(String urlWSRestAuth, String mdmLogin, String mdmPassword)
-			throws FileNotFoundException, IOException, GeneralSecurityException {
+			throws FileNotFoundException, IOException, GeneralSecurityException, URISyntaxException {
 		String authToken = null;
 		LoginRequest login = null;
 		Response response = null;
@@ -161,10 +165,11 @@ public class DevicesRestRepository {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 * @throws KeyManagementException
+	 * @throws URISyntaxException
 	 */
 	public SSLContext getSSLContextFromKeystore()
 			throws NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException, CertificateException,
-			FileNotFoundException, IOException, KeyManagementException {
+			FileNotFoundException, IOException, KeyManagementException, URISyntaxException {
 		SSLContext sslContext = null;
 		KeyManagerFactory keyMgrFactory = null;
 		KeyStore keyStore = null;
@@ -191,8 +196,9 @@ public class DevicesRestRepository {
 	/**
 	 * @param relativePathFile
 	 * @return
+	 * @throws URISyntaxException
 	 */
-	private String getAbsolutePathResourceFile(String relativePathFile) {
+	private String getAbsolutePathResourceFile(String relativePathFile) throws URISyntaxException {
 		String filePath = null;
 		File file = null;
 		// file = new
@@ -200,9 +206,14 @@ public class DevicesRestRepository {
 		// file = new
 		// File(getClass().getClassLoader().getResource(relativePathFile).getPath(),
 		// relativePathFile);
-		filePath = getClass().getClassLoader().getResource(relativePathFile).getPath();
+		URL urlApplicationContext = getClass().getClassLoader().getResource(relativePathFile);
+		if (urlApplicationContext != null) {
+			file = new File(urlApplicationContext.toURI());
+		} else {
+			throw new RuntimeException("Cannot find XML file 'applicationContext.xml'");
+		}
 
-		file = new File(filePath);
+		// file = new File(filePath);
 		System.out.println(filePath);
 		System.out.println(file.getAbsolutePath());
 		System.out.println(file.exists());

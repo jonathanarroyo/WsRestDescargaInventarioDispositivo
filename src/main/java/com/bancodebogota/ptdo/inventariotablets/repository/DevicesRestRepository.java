@@ -171,12 +171,12 @@ public class DevicesRestRepository {
 		TrustManagerFactory tmf = null;
 
 		sslContext = SSLContext.getInstance("TLS");
-		System.getProperties().put("https.proxyHost", "piscis01.bancodebogota.net"); // TODO
-		System.getProperties().put("https.proxyPort", "8003");
+		// System.getProperties().put("https.proxyHost", "piscis01.bancodebogota.net"); // TODO
+		// System.getProperties().put("https.proxyPort", "8003");
 
 		keyMgrFactory = KeyManagerFactory.getInstance("SunX509");
 		keyStore = KeyStore.getInstance("JKS");
-		System.out.println(getAbsolutePathResourceFile(mainKeystorePath));
+		System.out.println(getAbsolutePathResourceFile(mainKeystorePath).getAbsolutePath());
 		keyStore.load(new FileInputStream(getAbsolutePathResourceFile(mainKeystorePath)),
 				mainKeystorePassword.toCharArray());
 		keyMgrFactory.init(keyStore, mainKeystorePassword.toCharArray());
@@ -192,12 +192,10 @@ public class DevicesRestRepository {
 	 * @param relativePathFile
 	 * @return
 	 */
-	private String getAbsolutePathResourceFile(String relativePathFile) {
-		ClassLoader classLoader = null;
+	private File getAbsolutePathResourceFile(String relativePathFile) {
 		File file = null;
-		classLoader = getClass().getClassLoader();
-		file = new File(classLoader.getResource(relativePathFile).getFile());
-		return file.getAbsolutePath();
+		file = new File(getClass().getClassLoader().getResource(relativePathFile).getFile());
+		return file;
 	}
 
 }

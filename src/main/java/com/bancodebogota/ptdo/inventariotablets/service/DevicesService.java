@@ -108,8 +108,9 @@ public class DevicesService {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 * @throws GeneralSecurityException
+	 * @throws URISyntaxException 
 	 */
-	public void getDevicesToDataBase() throws FileNotFoundException, IOException, GeneralSecurityException {
+	public void getDevicesToDataBase() throws FileNotFoundException, IOException, GeneralSecurityException, URISyntaxException {
 		List<Device> lstDevices = null;
 		lstDevices = getDevicesFilteredByUserDevice();
 		saveDevicesToDataBase(lstDevices);

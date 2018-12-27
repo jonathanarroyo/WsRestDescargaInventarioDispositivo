@@ -2,6 +2,7 @@ package com.bancodebogota.ptdo.inventariotablets.controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
@@ -32,9 +33,11 @@ public class DevicesController {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 * @throws GeneralSecurityException
+	 * @throws URISyntaxException
 	 */
 	@RequestMapping(value = "/getDevicesFiltered", method = RequestMethod.GET)
-	public List<Device> getOfficeAdvicerState() throws FileNotFoundException, IOException, GeneralSecurityException {
+	public List<Device> getOfficeAdvicerState()
+			throws FileNotFoundException, IOException, GeneralSecurityException, URISyntaxException {
 		return devicesService.getDevicesFilteredByUserDevice();
 	}
 

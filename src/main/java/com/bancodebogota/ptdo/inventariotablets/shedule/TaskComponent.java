@@ -2,6 +2,7 @@ package com.bancodebogota.ptdo.inventariotablets.shedule;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.Date;
 
@@ -25,7 +26,11 @@ public class TaskComponent {
 	public void doTask() {
 		try {
 			log.info("TIME IS " + new Date());
+
 			deviceService.getDevicesToDataBase();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

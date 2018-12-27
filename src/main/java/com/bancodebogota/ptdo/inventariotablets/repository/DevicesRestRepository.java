@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
@@ -198,7 +200,7 @@ public class DevicesRestRepository {
 	 * @return
 	 * @throws URISyntaxException
 	 */
-	private String getAbsolutePathResourceFile(String relativePathFile) throws URISyntaxException {
+	private File getAbsolutePathResourceFile(String relativePathFile) throws URISyntaxException {
 		String filePath = null;
 		File file = null;
 		// file = new
@@ -206,9 +208,10 @@ public class DevicesRestRepository {
 		// file = new
 		// File(getClass().getClassLoader().getResource(relativePathFile).getPath(),
 		// relativePathFile);
-		URL urlApplicationContext = getClass().getClassLoader().getResource(relativePathFile);
+		URI urlApplicationContext = getClass().getClassLoader().getResource(relativePathFile).toURI();
 		if (urlApplicationContext != null) {
-			file = new File(urlApplicationContext.toURI());
+			// file = new File(filePath);
+			file = new File(urlApplicationContext);
 		} else {
 			throw new RuntimeException("Cannot find XML file 'applicationContext.xml'");
 		}
@@ -218,7 +221,12 @@ public class DevicesRestRepository {
 		System.out.println(file.getAbsolutePath());
 		System.out.println(file.exists());
 		System.out.println(file.canRead());
-		return filePath;
+		return file;
+	}
+
+	private InputStream getAbsolutePathResourceFile1(String relativePathFile) {
+		InputStream in = getClass().getClassLoader().getResourceAsStream("/data.sav");
+		return in;
 	}
 
 }

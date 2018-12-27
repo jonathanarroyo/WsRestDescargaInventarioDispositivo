@@ -176,7 +176,6 @@ public class DevicesRestRepository {
 
 		keyMgrFactory = KeyManagerFactory.getInstance("SunX509");
 		keyStore = KeyStore.getInstance("JKS");
-		System.out.println(getAbsolutePathResourceFile(mainKeystorePath));
 		keyStore.load(new FileInputStream(getAbsolutePathResourceFile(mainKeystorePath)),
 				mainKeystorePassword.toCharArray());
 		keyMgrFactory.init(keyStore, mainKeystorePassword.toCharArray());
@@ -193,10 +192,16 @@ public class DevicesRestRepository {
 	 * @return
 	 */
 	private String getAbsolutePathResourceFile(String relativePathFile) {
-		// File file = null;
+		String filePath = null;
+		File file = null;
 		// file = new File(getClass().getClassLoader().getResource(relativePathFile).getFile());
 		// file = new File(getClass().getClassLoader().getResource(relativePathFile).getPath(), relativePathFile);
-		return getClass().getClassLoader().getResource(relativePathFile).getPath();
+		filePath = getClass().getClassLoader().getResource(relativePathFile).getPath();
+		file = new File(filePath);
+		System.out.println(file.getAbsolutePath());
+		System.out.println(file.exists());
+		System.out.println(file.canRead());
+		return filePath; 
 	}
 
 }

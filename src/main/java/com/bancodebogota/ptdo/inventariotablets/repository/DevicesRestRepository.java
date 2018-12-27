@@ -208,13 +208,9 @@ public class DevicesRestRepository {
 		// file = new
 		// File(getClass().getClassLoader().getResource(relativePathFile).getPath(),
 		// relativePathFile);
-		URI urlApplicationContext = getClass().getClassLoader().getResource(relativePathFile).toURI();
-		if (urlApplicationContext != null) {
-			// file = new File(filePath);
-			file = new File(urlApplicationContext);
-		} else {
-			throw new RuntimeException("Cannot find XML file 'applicationContext.xml'");
-		}
+		URI urlApplicationContext = new URI(getClass().getClassLoader().getResource(relativePathFile).toExternalForm());
+		// file = new File(filePath);
+		file = new File(urlApplicationContext);
 
 		// file = new File(filePath);
 		System.out.println(filePath);

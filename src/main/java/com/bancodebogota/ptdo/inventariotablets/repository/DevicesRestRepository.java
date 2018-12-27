@@ -184,8 +184,12 @@ public class DevicesRestRepository {
 
 		keyMgrFactory = KeyManagerFactory.getInstance("SunX509");
 		keyStore = KeyStore.getInstance("JKS");
-		keyStore.load(new FileInputStream(getAbsolutePathResourceFile(mainKeystorePath)),
-				mainKeystorePassword.toCharArray());
+		/*
+		 * keyStore.load(new
+		 * FileInputStream(getAbsolutePathResourceFile1(mainKeystorePath)),
+		 * mainKeystorePassword.toCharArray());
+		 */
+		keyStore.load(getAbsolutePathResourceFile1(mainKeystorePath), mainKeystorePassword.toCharArray());
 		keyMgrFactory.init(keyStore, mainKeystorePassword.toCharArray());
 
 		tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
@@ -221,7 +225,7 @@ public class DevicesRestRepository {
 	}
 
 	private InputStream getAbsolutePathResourceFile1(String relativePathFile) {
-		InputStream in = getClass().getClassLoader().getResourceAsStream("/data.sav");
+		InputStream in = getClass().getClassLoader().getResourceAsStream(relativePathFile);
 		return in;
 	}
 
